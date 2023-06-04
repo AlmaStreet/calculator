@@ -1,0 +1,57 @@
+.calculator-main {
+    width: 500px;
+    height: 750px;
+    background-color: black;
+    border: 20px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 35px;
+}
+
+.screen {
+    width: 500px;
+    height: 100px;
+    background-color: grey;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 80px;
+    text-align-last: right;
+    padding: 5px;
+}
+
+button {
+    width: 125px;
+    height: 125px;
+    border-radius: 13px;
+    border: 2px solid black;
+    font-size: 30px;
+}
+
+.zero {
+    width: 250px;
+}
+
+.operand {
+    background-color: rgb(240, 255, 240);
+}
+.operand:active {
+    background-color: rgb(240, 255, 240, 0.7);
+}
+
+.operator {
+    background-color: orange;
+}
+
+.operator:active {
+    background-color: rgb(255, 165, 0, 0.7);
+}
+
+.clear, .sign, .percent {
+    background: lightskyblue;
+}
+
+.clear:active, .sign:active, .percent:active {
+    background: rgb(135, 206, 250, 0.7);
+}
+
+
