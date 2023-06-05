@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <p>Hello P and DW, hope you enjoy this calculator!</p>
     <div class="calculator-main">
         <div class="screen">Hello</div>
         <button class="clear">AC</button>
@@ -30,5 +31,142 @@
         <button class="operand decimal">.</button>
         <button class="operator equals">=</button>
     </div>
+
+    <script>
+        let decimalState = false;
+        let divideState = false;
+        let multiplyState = false;
+        let subtractState = false;
+        let addState = false;
+        let firstNumber = "0";
+        let secondNumber = "0";
+        let firstNumberState = false;
+        let secondNumberState = false;
+        let operatorState = false;
+
+
+        document.querySelector(".screen").textContent = "Hello";
+        setTimeout(() => {
+            document.querySelector(".screen").textContent = firstNumber;
+        }, 1000)
+
+        let displayValue = document.querySelector(".screen").textContent;
+        let clear = document.querySelector(".clear");
+        clear.addEventListener("click", () => {
+            decimalState = false;
+            divideState = false;
+            multiplyState = false;
+            subtractState = false;
+            addState = false;
+            firstNumber = "0";
+            secondNumber = "0";
+            firstNumberState = false;
+            secondNumberState = false;
+            operatorState = false;
+
+            document.querySelector(".screen").textContent = "0";
+        });
+
+        let sign = document.querySelector(".sign");
+        sign.addEventListener("click", () => {
+            let currentNumber = document.querySelector(".screen").textContent;
+            console.log(currentNumber)
+            // console.log(currentNumber.)
+            if(currentNumber != "0") {
+                currentNumber = -currentNumber;
+                document.querySelector(".screen").textContent = currentNumber;
+            }
+        });
+
+        let percent = document.querySelector(".percent");
+        percent.addEventListener("click", () => {
+            let currentNumber = document.querySelector(".screen").textContent;
+            document.querySelector(".screen").textContent = currentNumber/100;
+        });
+
+        // Set Numbers
+        let numberButtons = document.querySelectorAll(".operand");
+        for(let i=0; i<numberButtons.length; i++) {
+            // console.log(numberButtons[i]);
+            if(numberButtons[i].textContent != ".") {
+                numberButtons[i].addEventListener("click", () => {
+                    console.log(numberButtons[i])
+                    if(document.querySelector(".screen").textContent == "0" || 
+                    (firstNumberState && !secondNumberState && operatorState)) {
+                        document.querySelector(".screen").textContent = numberButtons[i].textContent;
+                        secondNumberState = true;
+                    } else {
+                        document.querySelector(".screen").textContent += numberButtons[i].textContent;
+                    }
+                });
+            }
+        }
+        let decimalButton = document.querySelector(".decimal");
+        decimalButton.addEventListener("click", () => {
+            if(!decimalState) {
+                document.querySelector(".screen").textContent += decimalButton.textContent;
+                decimalState = true;
+            }
+        });
+        
+        let operatorButtons = document.querySelectorAll(".operator");
+        for(let i=0; i<operatorButtons.length; i++) {
+            // console.log(numberButtons[i]);
+            if(operatorButtons[i].textContent != "=") {
+                operatorButtons[i].addEventListener("click", () => {
+                    if(firstNumberState && operatorState) {
+                        secondNumber = document.querySelector(".screen").textContent;
+                        calculateNumber();
+                    }
+                    console.log(operatorButtons[i])
+                    
+                    if(operatorButtons[i].textContent == "/") {
+                        divideState = true;
+                    } else if (operatorButtons[i].textContent == "*") {
+                        multiplyState = true;
+                    } else if (operatorButtons[i].textContent == "-") {
+                        subtractState = true;
+                    } else if (operatorButtons[i].textContent == "+") {
+                        addState = true;
+                    }
+                    firstNumber = document.querySelector(".screen").textContent;
+                    decimalState = false;
+                    firstNumberState = true;
+                    secondNumberState = false;
+                    operatorState = true;
+                });
+            }
+        }
+
+        let equalsButton = document.querySelector(".equals");
+        equalsButton.addEventListener("click", () => {
+            secondNumber = document.querySelector(".screen").textContent;
+            calculateNumber()
+        });
+
+        function calculateNumber() {
+            console.log(firstNumber);
+            console.log(secondNumber);
+            if(divideState) {
+                firstNumber = +firstNumber / +secondNumber;
+            } else if(multiplyState) {
+                firstNumber = +firstNumber * +secondNumber;
+            } else if(subtractState) {
+                firstNumber = +firstNumber - +secondNumber;
+            } else if(addState) {
+                firstNumber = +firstNumber + +secondNumber;
+            }
+            operatorState = false;
+            secondNumber = "0";
+            console.log(firstNumber);
+            console.log(secondNumber);
+            displayContent(firstNumber);
+        }
+
+        function displayContent(content) {
+            document.querySelector(".screen").textContent = content;
+        }
+
+    </script>
 </body>
 </html>
